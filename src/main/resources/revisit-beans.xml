@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                            http://www.springframework.org/schema/context
+                            http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <!--<context:annotation-config/> &lt;!&ndash;tells Spring that you intend to use annotation-based wiring in Spring &ndash;&gt;-->
+    <context:component-scan base-package="com.celo"/> <!-- does everything the above tag does, plus allows declaration and autowiring of beans without using <bean> tag -->
+                                                        <!--The <context:component-scan> element works by scanning a package and all of its-->
+                                                        <!--subpackages, looking for classes that could be automatically registered as beans in the-->
+                                                        <!--Spring container.-->
+                                                        <!--The base-package attribute tells <context:component-scan> the-->
+                                                        <!--package to start its scan from.-->
+
+                                                         <!--So how does it do it:  looks for classes that are annotated with one of a handful of special stereotype annotations:-->
+                                                        <!--@Component—A general-purpose stereotype annotation indicating that the class-->
+                                                        <!--is a Spring component-->
+                                                        <!-- @Controller—Indicates that the class defines a Spring MVC controller-->
+                                                        <!-- @Repository—Indicates that the class defines a data repository-->
+                                                        <!-- @Service—Indicates that the class defines a service-->
+                                                        <!-- Any custom annotation that is itself annotated with @Component-->
+
+
+    <!-- FOR JAVA CONFIGURATION - this is where it would end.-->
+    <!--<context:component-scan >  also automatically loads-->
+    <!--in Java-based configuration classes that are annotated with @Configuration-->
+
+    <!-- Bean declarations go here -->
+    <bean id="dancer" class="com.celo.xml_based_wiring.interfaces.Dancer">
+        <constructor-arg value="15"></constructor-arg>
+    </bean>
+
+    <bean id="song" class="com.celo.xml_based_wiring.KwaitoSong"/>
+
+    <bean id="singing_dancer" class="com.celo.xml_based_wiring.SingingDancer">
+        <constructor-arg value="15"></constructor-arg>
+        <constructor-arg ref="song"></constructor-arg>
+    </bean>
+
+    <bean id="customer" class="com.celo.annotations_based_wiring.model.Customer"></bean>
+
+    <bean id="product" class="com.celo.annotations_based_wiring.model.Product"></bean>
+
+    <bean id="Payment" class="com.celo.annotations_based_wiring.model.Payment"></bean>
+
+</beans>
